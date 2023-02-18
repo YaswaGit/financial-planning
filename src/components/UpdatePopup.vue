@@ -18,7 +18,7 @@
                         <label for="Need" v-if="updateItem.financialArea === 3">Investment</label>
                     </div>
                     <div class="form-floating m-2">
-                        <input class="form-control" v-model="updateItem.amount" id="Amount" type="text" />
+                        <input class="form-control" v-model="updateItem.amount" id="Amount" type="number" />
                         <label for="Amount">Amount</label>
                     </div>
                     <div class="mt-1 d-flex justify-content-between">

@@ -42,22 +42,25 @@
         <div class="row">
             <div class="col d-flex">
 <!-- Needs -->
-                <div col-md-4>
+                <div class="col-md-4">
                     <div class="card m-2 shadow-lg border border-4 border-success">
-                        <div class="card-body">
+                        <div class="card-header">
                             <div class="card-title h5">
                                 <div class="card-title h5">
                                     <h2>Needs</h2>
                                     <div class="d-flex justify-content-between">
-                                      <span class="mx-1">{{ financialPlanning.monthlyIncome * financialPlanning.rule.needs / 100 }}</span>
+                                      <span class="mx-1">{{ OnhandNeedValidation() }}</span>
                                       <span class=""><i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(1)"></i></span>
+                                    </div>
+                                    <div class="progress my-1">
+                                      <div :class="['progress-bar', IsProgessOnhandNeed.bgClass]" role="progressbar" :style="{width:IsProgessOnhandNeed.width + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-text mt-1">Some quick example text to build on the card title and make up the bulk of the card's content.</div>
+                            <div class="card-text mt-1">Needs are the basic expenses that you absolutely require for your living</div>
                         </div>
-                        <div class="container">
-                            <ul class="list-group list-group-flush" v-for="person in financialPlanning.List" :key="person.id">
+                        <div class="container card-body" style="max-height: 300px; overflow-y: auto;">
+                          <ul class="list-group list-group-flush" v-for="person in financialPlanning.List" :key="person.id">
                                 <li class="list-group-item border border-2 border-dark mb-1 bg-transparent" v-if="person.financialArea === 1">
                                     <div class="d-flex justify-content-between align-items-center">
                                       <div class="mx-2 row border border-3 border-primary rounded">
@@ -75,44 +78,67 @@
                     </div>
                 </div>
 <!-- Wants -->
-                <div col-md-4>
+              <div class="col-md-4">
                     <div class="card m-2 shadow-lg border border-4 border-success">
-                        <div class="card-body">
-                            <div class="card-title h5">Wants <span class="float-right mx-1">{{ financialPlanning.monthlyIncome * financialPlanning.rule.wants / 100 }}</span>
-                                <i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(2)"></i>
+                        <div class="card-header">
+                            <div class="card-title h5">
+                                <div class="card-title h5">
+                                    <h2>Wants</h2>
+                                    <div class="d-flex justify-content-between">
+                                      <span class="mx-1">{{ financialPlanning.monthlyIncome * financialPlanning.rule.wants / 100 }}</span>
+                                      <span class=""><i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(2)"></i></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-text mt-1">Some quick example text to build on the card title and make up the bulk of the card's content.</div>
+                            <div class="card-text mt-1">These are expenses that are unnecessary for survival but considered luxuries of life</div>
                         </div>
-                        <div class="container">
+                        <div class="container card-body" style="max-height: 300px; overflow-y: auto;">
                             <ul class="list-group list-group-flush" v-for="person in financialPlanning.List" :key="person.id">
-                                <li class="list-group-item border border-2 border-dark mb-1" v-if="person.financialArea === 2">
-                                    <span class="mt-1 pl-1 h5 text-capitalize">{{ person.item}}</span>
-                                    <span class="float-right mt-1">
-                                        <i class="fa-solid fa-trash btn btn-danger ml-1 mt-1"  @click="deleteCardItem(person.id)"></i>
-                                        <i class="fa-solid fa-pen-to-square btn btn-info ml-1 mt-1" @click="getUpdateId(person.id)"></i>
-                                    </span><span class="float-right mt-1 btn">{{ person.amount }}</span>
+                                <li class="list-group-item border border-2 border-dark mb-1 bg-transparent" v-if="person.financialArea === 2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <div class="mx-2 row border border-3 border-primary rounded">
+                                        <span class="font-weight-bold d-flex align-items-center justify-content-center pt-sm-0 pt-0">{{ person.item}}</span>
+                                        <span class="d-flex align-items-center justify-content-center pt-1 pt-sm-0">{{ person.amount }}</span>
+                                      </div>
+                                      <span class="">
+                                        <i class="fa-solid fa-trash btn btn-danger m-1" @click="deleteCardItem(person.id)"></i>
+                                        <i class="fa-solid fa-pen-to-square btn btn-info m-1" @click="getUpdateId(person.id)" ></i>
+                                      </span>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
 <!-- Investments -->
-                <div col-md-4>
+
+                  <div class="col-md-4">
                     <div class="card m-2 shadow-lg border border-4 border-success">
-                        <div class="card-body">
-                            <div class="card-title h5">Investments <span class="float-right mx-1">{{ financialPlanning.monthlyIncome * financialPlanning.rule.investments / 100 }}</span>
-                                <i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(3)"></i>
+                        <div class="card-header">
+                            <div class="card-title h5">
+                                <div class="card-title h5">
+                                    <h2>Investments</h2>
+                                    <div class="d-flex justify-content-between">
+                                      <span class="mx-1">{{ financialPlanning.monthlyIncome * financialPlanning.rule.investments / 100 }}</span>
+                                      <span class=""><i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(3)"></i></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-text mt-1">Some quick example text to build on the card title and make up the bulk of the card's content.</div>
+                            <div class="card-text mt-1">This money helps to take care of your future needs. It ensures that these savings help you enjoy the same lifestyle that you are currently living.</div>
                         </div>
-                        <div class="conatainer">
+                        <div class="container card-body" style="max-height: 300px; overflow-y: auto;">
                             <ul class="list-group list-group-flush" v-for="person in financialPlanning.List" :key="person.id">
-                                <li class="list-group-item border border-2 border-dark m-1" v-if="person.financialArea === 3">
-                                    <span class="mt-1 h5 text-capitalize">{{ person.item}}</span>
-                                    <span class="float-right mt-1 mr-1">
-                                        <i class="fa-solid fa-trash btn btn-danger ml-1 mt-1"  @click="deleteCardItem(person.id)"></i>
-                                        <i class="fa-solid fa-pen-to-square btn btn-info ml-1 mt-1" @click="getUpdateId(person.id)"></i>
-                                    </span><span class="float-right mt-1 mr-1 btn">{{ person.amount }}</span>
+                                <li class="list-group-item border border-2 border-dark mb-1 bg-transparent" v-if="person.financialArea === 3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <div class="mx-2 row border border-3 border-primary rounded">
+                                        <span class="font-weight-bold d-flex align-items-center justify-content-center pt-sm-0 pt-0">{{ person.item}}</span>
+                                        <span class="d-flex align-items-center justify-content-center pt-1 pt-sm-0">{{ person.amount }}</span>
+                                      </div>
+                                      <span class="">
+                                        <i class="fa-solid fa-trash btn btn-danger m-1" @click="deleteCardItem(person.id)"></i>
+                                        <i class="fa-solid fa-pen-to-square btn btn-info m-1" @click="getUpdateId(person.id)" ></i>
+                                      </span>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -154,6 +180,12 @@ export default {
       showPopupCreate: false,
       getUpdateIdValue: 0,
       IsDangerOnhand: false,
+      IsProgessOnhandNeed: {
+        bgClass: 'bg-success',
+        width: 0
+      },
+      IsDangerOnhandWant: false,
+      IsDangerOnhandInvestment: false,
       item: {
         id: 0,
         item: '',
@@ -162,6 +194,8 @@ export default {
         financialArea: 0
       }
     }
+  },
+  computed: {
   },
   methods: {
     ruleValidation () {
@@ -210,27 +244,35 @@ export default {
       const itemIndex = this.financialPlanning.List.findIndex(item => item.id === obj.id)
       this.financialPlanning.List.splice(itemIndex, 1, obj)
     },
+    totalIndividualNeedWantInvestment (financialArea) {
+      return this.financialPlanning.List.reduce((acc, value) => {
+        if (value.financialArea === financialArea) {
+          acc = acc + parseInt(value.amount)
+        }
+        return acc
+      }, 0)
+    },
     onHand () {
       const monthlyIncome = this.financialPlanning.monthlyIncome
-      const totalNeed = this.financialPlanning.List.reduce((acc, value) => {
-        if (value.financialArea === 1) {
-          acc = acc + parseInt(value.amount)
-        }
-        return acc
-      }, 0)
-      const totalWant = this.financialPlanning.List.reduce((acc, value) => {
-        if (value.financialArea === 2) {
-          acc = acc + parseInt(value.amount)
-        }
-        return acc
-      }, 0)
-      const totalInvestment = this.financialPlanning.List.reduce((acc, value) => {
-        if (value.financialArea === 3) {
-          acc = acc + parseInt(value.amount)
-        }
-        return acc
-      }, 0)
-      const onHandTotal = monthlyIncome - totalNeed - totalWant - totalInvestment
+      // const totalNeed = this.financialPlanning.List.reduce((acc, value) => {
+      //   if (value.financialArea === 1) {
+      //     acc = acc + parseInt(value.amount)
+      //   }
+      //   return acc
+      // }, 0)
+      // const totalWant = this.financialPlanning.List.reduce((acc, value) => {
+      //   if (value.financialArea === 2) {
+      //     acc = acc + parseInt(value.amount)
+      //   }
+      //   return acc
+      // }, 0)
+      // const totalInvestment = this.financialPlanning.List.reduce((acc, value) => {
+      //   if (value.financialArea === 3) {
+      //     acc = acc + parseInt(value.amount)
+      //   }
+      //   return acc
+      // }, 0)
+      const onHandTotal = monthlyIncome - this.totalIndividualNeedWantInvestment(1) - this.totalIndividualNeedWantInvestment(2) - this.totalIndividualNeedWantInvestment(3)
       if (onHandTotal >= 0) this.IsDangerOnhand = false
       else this.IsDangerOnhand = true
       //     console.log('Monthly income', monthlyIncome)
@@ -239,6 +281,18 @@ export default {
       //     console.log('totalInvestment', totalInvestment)
       //     console.log('onhand', onHandTotal)
       return onHandTotal
+    },
+    OnhandNeedValidation () {
+      const totalNeed = (this.financialPlanning.monthlyIncome * (this.financialPlanning.rule.needs / 100))
+      const totalOnhandNeed = totalNeed - this.totalIndividualNeedWantInvestment(1)
+      //  this totalIndividualNeedWantInvestment provides need sum from the list :- 1 for need
+      console.log('calculation width' + this.totalIndividualNeedWantInvestment(1) / totalNeed * 100)
+      if (this.totalIndividualNeedWantInvestment(1) / totalNeed * 100 >= 0 && this.totalIndividualNeedWantInvestment(1) / totalNeed * 100 <= 100) {
+        this.IsProgessOnhandNeed.width = (this.totalIndividualNeedWantInvestment(1) / totalNeed * 100)
+      } else {
+        this.IsProgessOnhandNeed.width = 100
+      }
+      return totalOnhandNeed
     },
     passCreateItemTochild (financialArea) {
       this.item.financialArea = financialArea

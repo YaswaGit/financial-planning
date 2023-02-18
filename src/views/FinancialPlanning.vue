@@ -1,15 +1,15 @@
 <template>
     <div>
-      <VuexFinancialPlanningVue/>
+      <FinancialPlanningVue/>
     </div>
 </template>
 
 <script>
-import VuexFinancialPlanningVue from '@/components/vuex/VuexFinancialPlanning.vue'
+import FinancialPlanningVue from '@/components/mainComponents/FinancialPlanning.vue'
 export default {
   name: 'FinancialPlanning',
   components: {
-    VuexFinancialPlanningVue
+    FinancialPlanningVue
   }
 }
 </script>
