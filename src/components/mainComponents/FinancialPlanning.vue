@@ -49,7 +49,7 @@
                                 <div class="card-title h5">
                                     <h2>Needs</h2>
                                     <div class="d-flex justify-content-between">
-                                      <span class="mx-1">{{ OnhandNeedValidation() }}</span>
+                                      <span class="mx-1">{{ ProgressBarNeed() }}</span>
                                       <span class=""><i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(1)"></i></span>
                                     </div>
                                     <div class="progress my-1">
@@ -85,8 +85,11 @@
                                 <div class="card-title h5">
                                     <h2>Wants</h2>
                                     <div class="d-flex justify-content-between">
-                                      <span class="mx-1">{{ financialPlanning.monthlyIncome * financialPlanning.rule.wants / 100 }}</span>
+                                      <span class="mx-1">{{ ProgressBarWant() }}</span>
                                       <span class=""><i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(2)"></i></span>
+                                    </div>
+                                    <div class="progress my-1">
+                                      <div :class="['progress-bar', IsProgessOnhandWant.bgClass]" role="progressbar" :style="{width:IsProgessOnhandWant.width + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -119,8 +122,11 @@
                                 <div class="card-title h5">
                                     <h2>Investments</h2>
                                     <div class="d-flex justify-content-between">
-                                      <span class="mx-1">{{ financialPlanning.monthlyIncome * financialPlanning.rule.investments / 100 }}</span>
+                                      <span class="mx-1">{{ ProgressBarInvestment() }}</span>
                                       <span class=""><i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(3)"></i></span>
+                                    </div>
+                                    <div class="progress my-1">
+                                      <div :class="['progress-bar', IsProgessOnhandInvestments.bgClass]" role="progressbar" :style="{width:IsProgessOnhandInvestments.width + '%'}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -184,8 +190,14 @@ export default {
         bgClass: 'bg-success',
         width: 0
       },
-      IsDangerOnhandWant: false,
-      IsDangerOnhandInvestment: false,
+      IsProgessOnhandWant: {
+        bgClass: 'bg-success',
+        width: 0
+      },
+      IsProgessOnhandInvestments: {
+        bgClass: 'bg-success',
+        width: 0
+      },
       item: {
         id: 0,
         item: '',
@@ -282,7 +294,7 @@ export default {
       //     console.log('onhand', onHandTotal)
       return onHandTotal
     },
-    OnhandNeedValidation () {
+    ProgressBarNeed () {
       const totalNeed = (this.financialPlanning.monthlyIncome * (this.financialPlanning.rule.needs / 100))
       const totalOnhandNeed = totalNeed - this.totalIndividualNeedWantInvestment(1)
       //  this totalIndividualNeedWantInvestment provides need sum from the list :- 1 for need
@@ -293,6 +305,30 @@ export default {
         this.IsProgessOnhandNeed.width = 100
       }
       return totalOnhandNeed
+    },
+    ProgressBarWant () {
+      const totalWant = (this.financialPlanning.monthlyIncome * (this.financialPlanning.rule.wants / 100))
+      const totalOnhandWant = totalWant - this.totalIndividualNeedWantInvestment(2)
+      //  this totalIndividualNeedWantInvestment provides need sum from the list :- 1 for need
+      console.log('calculation width' + this.totalIndividualNeedWantInvestment(2) / totalWant * 100)
+      if (this.totalIndividualNeedWantInvestment(2) / totalWant * 100 >= 0 && this.totalIndividualNeedWantInvestment(2) / totalWant * 100 <= 100) {
+        this.IsProgessOnhandWant.width = (this.totalIndividualNeedWantInvestment(2) / totalWant * 100)
+      } else {
+        this.IsProgessOnhandWant.width = 100
+      }
+      return totalOnhandWant
+    },
+    ProgressBarInvestment () {
+      const totalInvestment = (this.financialPlanning.monthlyIncome * (this.financialPlanning.rule.investments / 100))
+      const totalOnhandInvestment = totalInvestment - this.totalIndividualNeedWantInvestment(3)
+      //  this totalIndividualNeedWantInvestment provides need sum from the list :- 1 for need
+      console.log('calculation width' + this.totalIndividualNeedWantInvestment(3) / totalInvestment * 100)
+      if (this.totalIndividualNeedWantInvestment(3) / totalInvestment * 100 >= 0 && this.totalIndividualNeedWantInvestment(3) / totalInvestment * 100 <= 100) {
+        this.IsProgessOnhandInvestments.width = (this.totalIndividualNeedWantInvestment(3) / totalInvestment * 100)
+      } else {
+        this.IsProgessOnhandInvestments.width = 100
+      }
+      return totalOnhandInvestment
     },
     passCreateItemTochild (financialArea) {
       this.item.financialArea = financialArea
