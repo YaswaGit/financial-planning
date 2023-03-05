@@ -1,6 +1,6 @@
 <template>
-    <div>
-     <div class="container mt-3">
+    <div class="">
+      <div class="container-fluid mt-3">
         <div class="row">
             <div class="col input-group">
                 <span class="input-group-text"><i class="fa-sharp fa-solid fa-indian-rupee-sign"></i></span>
@@ -36,9 +36,9 @@
                 </div>
             </div>
         </div>
-     </div>
+      </div>
 
-     <div class="container mt-3">
+     <div class="container-fluid mt-3">
         <div class="row">
             <div class="col d-flex">
 <!-- Needs -->
@@ -47,7 +47,7 @@
                         <div class="card-header">
                             <div class="card-title h5">
                                 <div class="card-title h5">
-                                    <h2>Needs</h2>
+                                    <h3>Needs</h3>
                                     <div class="d-flex justify-content-between">
                                       <span class="mx-1">{{ ProgressBarNeed() }}</span>
                                       <span class=""><i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(1)"></i></span>
@@ -83,7 +83,7 @@
                         <div class="card-header">
                             <div class="card-title h5">
                                 <div class="card-title h5">
-                                    <h2>Wants</h2>
+                                    <h3>Wants</h3>
                                     <div class="d-flex justify-content-between">
                                       <span class="mx-1">{{ ProgressBarWant() }}</span>
                                       <span class=""><i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(2)"></i></span>
@@ -120,7 +120,7 @@
                         <div class="card-header">
                             <div class="card-title h5">
                                 <div class="card-title h5">
-                                    <h2>Investments</h2>
+                                    <h3>Investments</h3>
                                     <div class="d-flex justify-content-between">
                                       <span class="mx-1">{{ ProgressBarInvestment() }}</span>
                                       <span class=""><i class="fa-solid fa-plus btn btn-primary ml-1" @click="showPopupCreate = true, passCreateItemTochild(3)"></i></span>
